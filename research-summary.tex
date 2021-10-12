@@ -1,0 +1,107 @@
+My primary research focus has been on the verification of Rust programs using the SMACK verification tool as
+a foundation. SMACK is a framework which translates the LLVM-IR pseudo-assembly language into the verification Boogie, which allows SMACK to check for assertion violations in the source program. This theoretically source-language agnostic tool is a good base upon which to build a Rust language verifier, without developing an entire new verification framework. My contributions in this area include:
+\begin{itemize}
+
+\item 
+Verification of a zero-cost information flow control system for a prototype operating system written in Rust.
+%
+In particular, I extended some of SMACK's modeling of Rust libraries, its handling of integer overflow and the scalability of SMACK on Rust programs in order to correctly detect deliberate bug injections causing improper accesses to some secret.
+%
+Furthermore, SMACK was able to verify that for all privilege levels, only an equal or greater privilege level is able to access a secret.
+%
+This problem brought SMACK to a state where it could verify real programs within a reasonable time.\cite{ifc}
+%Rust is a new system programming language that offers a practical and safe alternative to C. Rust is unique in that
+%it enforces safety without runtime overhead, most importantly, without the overhead of garbage collection. While
+%zero-cost safety is remarkable on its own, we argue that the superpowers of Rust go beyond safety. In particular, Rust's
+%linear type system enables capabilities that cannot be implemented efficiently in traditional languages, both safe and unsafe,
+%and that dramatically improve security and reliability of system software. We show three examples of such capabilities:
+%zero-copy software fault isolation, efficient static information flow analysis, and automatic checkpointing. While these
+%capabilities have been in the spotlight of systems research for a long time, their practical use is hindered by high cost and
+%complexity. We argue that with the adoption of Rust these mechanisms will become commoditized.
+
+\item
+In follow up work~\cite{atva}, I improved SMACK's support for more of the Rust standard library, allowing for greater scalability and applicability of the verifier.
+%
+This work improved the modeling of memory operations in SMACK to increase its compatibility with Rust.
+%
+I also implemented models of some missing LLVM-IR instructions in order to improve the SMACK verifier's support for this language.
+%
+This work brought SMACK to a state where it was nearly feature complete with respect to the Rust programming language, if not necessarily scalable.
+% Rust is an emerging systems programming language with guaranteed memory safety and modern language
+%features that has been extensively adopted to build safety-critical software. However, there is currently a lack of
+%automated software verifiers for Rust. In this work, we present our experience extending the SMACK verifier to
+%enable its usage on Rust programs. We evaluate SMACK on a set of Rust programs to demonstrate a wide spectrum
+%of language features it supports. 
+
+\item
+Based on my experiences extending SMACK to support Rust programs, a colleague built off this process to extend SMACK's support to several other languages.
+%
+For this work~\cite{vmcai}, I implemented new models of Rust standard library classes and implemented models for some LLVM-IR instructions to maintain feature parity with the newly added languages
+%
+This work also added the ability for SMACK to verify programs which utilize the FFI feature of Rust, enabling verification of cross-language programs.
+%Developers nowadays regularly use numerous programming languages with different characteristics 
+%and trade-offs. Unfortunately,implementing a software verifier for a new language from scratch
+%is alarge and tedious undertaking, requiring expert knowledge in multipledomains, such as compilers,
+%verification, and constraint solving. Hence,only a tiny fraction of the used languages has readily 
+%available soft-ware verifiers to aid in the development of correct programs. In the pastdecade, there has
+%been a trend of leveraging popular compiler interme-diate representations (IRs), such as LLVM IR, when
+%implementing soft-ware verifiers. Processing IR promises out-of-the-box multi- and cross-language verification
+%since, at least in theory, a verifier ought to be ableto handle a program in any programming language (and their
+%combina-tion) that can be compiled into the IR. In practice though, to the bestof our knowledge, nobody has
+%explored the feasibility and ease of suchintegration of new languages. In this paper, we provide a procedure
+%foradding support for a new language into an IR-based verification toolflow.Using our procedure, we extend
+%the SMACK verifier with prototypicalsupport for 6 additional languages. We assess the quality of our exten-sions
+%through several case studies, and we describe our experience indetail to guide future efforts in this area
+\item
+Recently, I have integrated Cargo, Rust's build system, into SMACK, and have greatly improved SMACK's scalability on larger programs.
+%
+I am currently working to improve the scalability of SMACK for verifying the memory safety of unsafe functions in Rust programs.
+
+\end{itemize}
+
+%Other contributions I have made in the field of finite-precision computer arithmetic include:
+%\begin{itemize}
+%\item
+%I and my colleagues specified a formal SMT theory for fixed-point arithmetic.~\cite{ijcar}
+%%
+%Specifically, we developed a semantics for a fixed-point arithmetic theory with arbitrary precision and the core set of operations and modes used in real world fixed-point libraries.
+%%
+%We developed a prototype tool to translate queries in this theory into the SMT bit-vector and real theories.
+%%
+%We created an automatically generated benchmark suite, and conducted experiments to rank SMT solvers on translations of our queries.
+%
+%%Fixed-point arithmetic is a popular alternative to floating-point arithmetic on embedded systems. Existing work on
+%%the verification of fixed-point programs relies on custom formalizations of fixed-point arithmetic, which makes it hard
+%%to compare the described techniques or reuse the implementations. In this paper, we address this issue by proposing
+%%and formalizing an SMT theory of fixed-point arithmetic. We present an intuitive yet comprehensive syntax of the fixed-point theory,
+%%and provide formal semantics for it based on rational arithmetic. We also describe two decision procedures for this theory: one based
+%%on the theory of bit-vectors and the other on the theory of reals. We implement the two decision procedures, and evaluate our
+%%implementations using existing mature SMT solvers on a benchmark suite we created. Finally, we perform a case study of using the
+%%theory we propose to verify properties of quantized neural networks.
+%
+%\item
+%In this work~\cite{nsv}, we developed a tool to solve queries in the SMT floating-point theory.
+%%
+%We found that for satisfying instances, this approach is competitive with current solving technologies.
+%%We present OL1V3R, a solver for the SMT floating-point theory that is based on stochastic local search (SLS). We adapt for
+%%OL1V3R the key ingredients of related work on leveraging SLS to solve the SMT fixed-sized bit-vector theory, and confirm its
+%%effectiveness by comparing it with mature solvers. Finally, we discuss the limitations of OL1V3R and propose solutions to
+%%make it more powerful.
+%
+%\item
+%For the FPTaylor tool~\cite{fptaylor}, I helped develop a rigorous global optimizer for computing estimates of error bounds of round-off errors with an eye toward performance.
+%%
+%This work helped improve the error estimates given by FPTaylor, and improved its solution times.
+%%Rigorous estimation of maximum floating-point round-off errors is an important capability central to many formal verification tools.
+%%Unfortunately, available techniques for this task often provide very pessimistic overestimates, causing unnecessary verification failure.
+%%We have developed a new approach called Symbolic Taylor Expansions that avoids these problems, and implemented a new tool called
+%%FPTaylor embodying this approach. Key to our approach is the use of rigorous global optimization, instead of the more familiar interval
+%%arithmetic, affine arithmetic, and/or SMT solvers. FPTaylor emits per-instance analysis certificates in the form of HOL Light proofs that
+%%can be machine checked. In this paper, we present the basic ideas behind Symbolic Taylor Expansions in detail. We also survey as well as
+%%thoroughly evaluate six tool families, namely Gappa (two tool options studied), Fluctuat, PRECiSA, Real2Float, Rosa and FPTaylor (two tool
+%%options studied) on 24 examples, running on the same machine, and taking care to find the best options for running each of these tools. This
+%%study demonstrates that FPTaylor estimates round-off errors within much tighter bounds compared to other tools on a significant number of
+%%case studies. We also release FPTaylor along with our benchmarks, thus contributing to future studies and tool development in this area.
+%\end{itemize}
+
+
