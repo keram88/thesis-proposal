@@ -1,0 +1,23 @@
+%\section{Future Work}
+\section{Equivalence Checking using Boogie as an Intermediate Verification Language}
+Program correctness is known to be difficult to prove.
+%
+Languages, such as Dafny, provide for verification constructs at the language level, allowing programs to be proved correct.
+%
+However, usage of these languages requires user expertise in helping a verifier construct a proof for the program.
+%
+These verified programming languages often provide translators to other programming languages such as C, Java, or Rust.
+%
+These programming languages are more amenable for a ``normal'' development cycle.
+%
+There are concerns arising from the use of this translated code, including:
+%
+\begin{itemize}
+\item there may be errors in the translation.
+%
+\item the style of the generated code may not be ``idiomatic'' in style for the target language.
+%
+\item a translated program may drift away from the verified program, necessitating porting of changes back for verification.
+\end{itemize}
+Each of these could be addressed by performing \textit{equivalence checking} between the verified program and the other program.
+%
